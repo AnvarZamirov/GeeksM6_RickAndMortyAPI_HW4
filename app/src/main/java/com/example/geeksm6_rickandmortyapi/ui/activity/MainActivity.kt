@@ -24,11 +24,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.geeksm6_rickandmortyapi.ui.screens.CharacterScreen
-import com.example.geeksm6_rickandmortyapi.ui.screens.SeriesScreen
 import com.example.geeksm6_rickandmortyapi.ui.screens.Screens
 import com.example.geeksm6_rickandmortyapi.ui.theme.RickAndMortyComposeTheme
 import com.example.rickandmortycompose.R
+import com.example.geeksm6_rickandmortyapi.ui.screens.CharacterScreen
+import com.example.geeksm6_rickandmortyapi.ui.screens.SeriesScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,20 +44,27 @@ class MainActivity : ComponentActivity() {
     private fun RickAndMortyApp() {
         val navController = rememberNavController()
 
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = { TopBar() },
-            bottomBar = { BottomBar(navController) }
-        ) { innerPadding ->
+        Scaffold(modifier = Modifier.fillMaxSize(),
+            topBar = {
+                TopBar()
+            },
+            bottomBar = {
+                BottomBar(navController)
+            }) { innerPadding ->
             NavHost(
                 navController = navController,
                 startDestination = Screens.EpisodeScreen.route,
                 modifier = Modifier.padding(innerPadding)
             ) {
-                composable(Screens.EpisodeScreen.route) { SeriesScreen() }
-                composable(Screens.CharacterScreen.route) { CharacterScreen() }
+                composable(Screens.EpisodeScreen.route) {
+                    SeriesScreen()
+                }
+                composable(Screens.CharacterScreen.route) {
+                    CharacterScreen()
+                }
             }
         }
+
     }
 }
 
@@ -98,7 +105,8 @@ fun BottomBar(navController: NavController) {
                 },
                 label = {
                     Text(
-                        text = if (screen == Screens.CharacterScreen) "Characters" else "Series"
+                        text = if (screen == Screens.CharacterScreen) "Characters"
+                        else "Episodes"
                     )
                 },
                 selected = currentRoute == screen.route,
@@ -115,3 +123,4 @@ fun BottomBar(navController: NavController) {
         }
     }
 }
+
